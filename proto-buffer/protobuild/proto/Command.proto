@@ -1,0 +1,23 @@
+package com.lyh.protocol;
+option java_package="com.protobuf.common";
+	
+enum CodeType
+{
+	// 0x0开头的是基础消息，不能改变
+	CLIENT_INFO = 0x00001;// 客户端信息,客户端数据都由这个协议处理
+	SERVER_INFO = 0x00002;// 服务器信息,服务器数据都由这个协议处理
+	HEART_INFO = 0x0ffff;// 心跳
+	CLIENT_EXIT_REQUEST = 0x00003;// 客户端退出请求
+	CLIENT_EXIT_RESPONSE = 0x00004;// 客户端退出返回
+	CLIENT_CONNECT_SUCCESS_REQUEST = 0x00005;// 客户端连接成功请求
+	CLIENT_CONNECT_SUCCESS_RESPONSE = 0x00006;// 客户端连接成功返回
+
+	// 0x2开头的是游戏逻辑服消息
+	PLAYER_ENTER_GAME_REQUEST = 0x20001;// 玩家进入游戏服请求
+	PLAYER_ENTER_GAME_RESPONSE = 0x20002;// 玩家进入游戏服返回
+	PLAYER_ENTER_GAME_ROOM_REQUEST = 0x20003;// 玩家进入游戏房间请求
+	PLAYER_ENTER_GAME_ROOM_RESPONSE = 0x20004;// 玩家进入游戏房间返回
+	PLAYER_LEAVE_GAME_ROOM_REQUEST = 0x20005;// 玩家离开房间请求
+	PLAYER_LEAVE_GAME_ROOM_RESPONSE = 0x20006;// 玩家离开房间返回
+
+}

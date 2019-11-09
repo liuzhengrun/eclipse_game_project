@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+option java_package = "com.protobuf.common";
+
+option java_outer_classname = "Msg";
+
+//CLIENT_INFO = 0x00001;// 客户端信息
+message Client{
+    int64 code = 1;
+    string token = 2;
+    bytes body = 3;
+}
+
+//SERVER_INFO = 0x00002;// 服务器信息
+message Server{
+    int64 code = 1;
+    string token = 2;
+    bytes body = 3;
+}
+
+//HEART_INFO = 0x0ffff;// 心跳
+message Heart{
+    string value = 1;
+}
+
+//CLIENT_EXIT_REQUEST = 0x00003;// 客户端退出请求
+message ClientExitRequest{
+}
+
+//CLIENT_EXIT_RESPONSE = 0x00004;// 客户端退出返回
+message ClientExitResponse{
+    string value = 1;
+}
+
+//CLIENT_CONNECT_SUCCESS_REQUEST = 0x00005;// 客户端连接成功请求
+message ClientConnectSuccessRequest{
+}
+
+//CLIENT_CONNECT_SUCCESS_RESPONSE = 0x00006;// 客户端连接成功返回
+message ClientConnectSuccessResponse{
+    string value = 1;
+}

@@ -1,0 +1,154 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.lzr.cluster</groupId>
+  <artifactId>login</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>login</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.spring.version>5.2.0.RELEASE</project.spring.version>
+  </properties>
+
+  <dependencies>
+  	
+  	<dependency>
+  		<groupId>com.lzr.cluster</groupId>
+  		<artifactId>general-data</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  
+  	<!-- spring 依赖 -->
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-core</artifactId>
+  		<version>${project.spring.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-beans</artifactId>
+  		<version>${project.spring.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-aop</artifactId>
+  		<version>${project.spring.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-context</artifactId>
+  		<version>${project.spring.version}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-dao</artifactId>
+  		<version>2.0.8</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-jdbc</artifactId>
+  		<version>${project.spring.version}</version>
+  	</dependency>
+  	
+  	<!-- 数据库依赖 -->
+  	<!--mysql数据库驱动 -->
+  	<dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>5.1.35</version>
+    </dependency>
+    <!-- Hikaricp数据库连接池 -->
+    <dependency>
+        <groupId>com.zaxxer</groupId>
+        <artifactId>HikariCP</artifactId>
+        <version>3.2.0</version>
+    </dependency>
+    <!-- mybatis ORM框架 -->
+	<dependency>
+    	<groupId>org.mybatis</groupId>
+    	<artifactId>mybatis</artifactId>
+    	<version>3.5.2</version>
+	</dependency>
+	<!--mybatis-spring适配器 -->
+	<dependency>
+    	<groupId>org.mybatis</groupId>
+    	<artifactId>mybatis-spring</artifactId>
+    	<version>2.0.1</version>
+	</dependency>
+  	
+  	<!-- redis缓存依赖 -->
+	<dependency>
+    	<groupId>org.springframework.data</groupId>
+    	<artifactId>spring-data-redis</artifactId>
+    	<version>1.8.23.RELEASE</version>
+	</dependency>
+	<dependency>
+    	<groupId>redis.clients</groupId>
+   	 	<artifactId>jedis</artifactId>
+   	 	<version>2.9.0</version>
+	</dependency>
+	
+  	<!-- 如果使用redis连接池（无论lettuce还是jedis客户端，都需要），需要导入如下依赖 -->
+    <!-- <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-pool2</artifactId>
+        <version>2.6.0</version>
+    </dependency> -->
+  	
+  	<!-- 日志依赖 -->
+	<dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-slf4j-impl</artifactId>
+        <version>2.12.1</version>
+    </dependency>
+	
+	<!-- Lombok插件使用依赖 -->
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>1.18.0</version>
+        <scope>provided</scope>
+    </dependency>
+  	
+  </dependencies>
+  
+  <build>
+  	<plugins>
+  		<!-- 如果项目中用到了Spring Framework，将依赖打到一个jar包中，运行时会出现读取XML schema文件出错。
+  		原因是Spring Framework的多个jar包中包含相同的文件spring.handlers和spring.schemas，如果生成一个jar包会互相覆盖。
+  		为了避免互相影响，可以使用AppendingTransformer来对文件内容追加合并 
+  		-->
+  		<plugin>  
+            <groupId>org.apache.maven.plugins</groupId>  
+            <artifactId>maven-shade-plugin</artifactId>  
+            <version>2.4.1</version>  
+            <executions>  
+                <execution>  
+                    <phase>package</phase>  
+                    <goals>  
+                        <goal>shade</goal>  
+                    </goals>  
+                    <configuration>  
+                        <transformers>  
+                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">  
+                                <mainClass>com.lzr.cluster.login.App</mainClass>  
+                            </transformer>  
+                            <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">  
+                                <resource>META-INF/spring.handlers</resource>  
+                            </transformer>  
+                            <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">  
+                                <resource>META-INF/spring.schemas</resource>  
+                            </transformer>  
+                        </transformers>  
+                    </configuration>  
+                </execution>  
+            </executions>  
+        </plugin>
+  	</plugins>
+  </build>
+</project>

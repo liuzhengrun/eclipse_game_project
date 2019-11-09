@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<scheduler>
+  <!--这个一个注释-->
+  <proxys>
+    <proxy code="0x00003" class-name="ClientExitRequest" entry-bean="worldServerControl" rights="all"/>
+    <proxy code="0x00002" class-name="Server" entry-bean="worldServerControl" rights="all"/>
+    <proxy code="0x00001" class-name="Client" entry-bean="worldServerControl" rights="all"/>
+    <proxy code="0x00006" class-name="ClientConnectSuccessResponse" entry-bean="worldServerControl" rights="all"/>
+    <proxy code="0x00005" class-name="ClientConnectSuccessRequest" entry-bean="worldServerControl" rights="all"/>
+    <proxy code="0x00004" class-name="ClientExitResponse" entry-bean="worldServerControl" rights="all"/>
+    <proxy code="0x20005" class-name="PlayerLeaveGameRoomRequest" entry-bean="worldServerControl" rights="all"/>
+    <proxy code="0x20004" class-name="PlayerEnterGameRoomResponse" entry-bean="worldServerControl" rights="all"/>
+    <proxy code="0x20003" class-name="PlayerEnterGameRoomRequest" entry-bean="worldServerControl" rights="all"/>
+    <proxy code="0x20002" class-name="PlayerEnterGameResponse" entry-bean="worldServerControl" rights="all"/>
+    <proxy code="0x20001" class-name="PlayerEnterGameRequest" entry-bean="worldServerControl" rights="all"/>
+    <proxy code="0x0ffff" class-name="Heart" entry-bean="worldServerControl" rights="all"/>
+    <proxy code="0x20006" class-name="PlayerLeaveGameRoomResponse" entry-bean="worldServerControl" rights="all"/>
+  </proxys>
+</scheduler>

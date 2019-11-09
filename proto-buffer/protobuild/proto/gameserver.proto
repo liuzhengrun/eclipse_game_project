@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_package = "com.protobuf.game";
+
+option java_outer_classname = "GameServer";
+
+//PLAYER_ENTER_GAME_REQUEST = 0x20001;// 玩家进入游戏服请求
+message PlayerEnterGameRequest{
+    int64 playerId = 1;// 玩家id
+}
+
+//PLAYER_ENTER_GAME_RESPONSE = 0x20002;// 玩家进入游戏服返回
+message PlayerEnterGameResponse{
+    int64 playerId = 1;// 玩家id
+    int64 diamond = 2;// 玩家钻石
+    int64 gold = 3;// 玩家金币
+    string playerName = 4;// 玩家昵称
+    string avatarPath = 5;// 头像路径
+}

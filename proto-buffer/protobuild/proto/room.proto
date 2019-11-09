@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option java_package = "com.protobuf.game";
+
+option java_outer_classname = "GameRoom";
+
+//PLAYER_ENTER_GAME_ROOM_REQUEST = 0x20003;// 玩家进入游戏请求
+message PlayerEnterGameRoomRequest{
+    int64 playerId = 1;// 玩家id
+}
+
+//PLAYER_ENTER_GAME_ROOM_RESPONSE = 0x20004;// 玩家进入游戏返回
+message PlayerEnterGameRoomResponse{
+    int64 playerId = 1;// 玩家id
+}
+
+//PLAYER_LEAVE_GAME_ROOM_REQUEST = 0x20005;// 玩家离开房间请求
+message PlayerLeaveGameRoomRequest{
+    int64 playerId = 1;// 玩家id
+}
+
+//PLAYER_LEAVE_GAME_ROOM_RESPONSE = 0x20006;// 玩家离开房间返回
+message PlayerLeaveGameRoomResponse{
+    int64 playerId = 1;// 玩家id
+}
