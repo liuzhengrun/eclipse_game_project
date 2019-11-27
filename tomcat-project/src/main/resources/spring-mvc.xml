@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:mvc="http://www.springframework.org/schema/mvc"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd ">
+		
+		<!-- 默认的注释映射支持,在实际的应用中通常都需要配置 -->
+		<mvc:annotation-driven/>
+		
+		<!-- web应用服务Servlet名称默认都是‘default’,DefaultServletHttpRequestHandler可以找到它 -->
+		<mvc:default-servlet-handler default-servlet-name="default"/>
+		
+		<!-- 开启controller注解支持，配置自定义扫描包 -->
+		<context:component-scan base-package="com.lzr.controller">
+			<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		</context:component-scan>
+		
+		<!-- 避免IE执行ajax时，返回json出现下载文件 -->
+		<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+			<property name="supportedMediaTypes">
+				<list>
+					<value>text/html;charset=UTF-8</value>
+				</list>
+			</property>
+		</bean>
+		
+		<!-- 启动SpringMVC的注解功能，完成请求和注入pojo的映射 -->
+		<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+			<property name="messageConverters">
+				<list>
+					<ref bean="mappingJacksonHttpMessageConverter"/>
+				</list>
+			</property>
+		</bean>
+		
+		<!-- 配置文件上传，如果没有使用文件上传功能可以不用配置 -->
+		<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+			<!-- 默认编码 -->
+			<property name="defaultEncoding" value="UTF-8"/>
+			<!-- 上传文件最大值 100M -->
+			<property name="maxUploadSize" value="104857600"/>
+			<!-- 内存中最大值 -->
+			<property name="maxInMemorySize" value="40960"/>
+			<!-- 启用是为了推迟文件解析，以便获取文件大小异常 -->
+			<property name="resolveLazily" value="true"/>
+		</bean>
+		
+		<!-- 配置viewResolver -->
+		<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+			<property name="messageConverters">
+				<list>
+					<!-- ModelAndView里的数据变成JSON -->
+					<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+						<property name="supportedMediaTypes">
+							<list>
+								<value>text/html;charset=UTF-8</value>
+								<value>application/json;charset=UTF-8</value>
+							</list>
+						</property>
+					</bean>
+				</list>
+			</property>
+		</bean>
+		
+		<!-- 配置视图解析器: 如何把 handler方法返回值解析为实际的物理视图 -->
+		<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+			<property name="prefix" value="/"></property>
+			<property name="suffix" value=".jsp"></property>
+		</bean>
+		
+</beans>

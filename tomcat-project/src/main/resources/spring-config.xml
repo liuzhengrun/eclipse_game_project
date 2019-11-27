@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd      
+	   http://www.springframework.org/schema/task
+	   http://www.springframework.org/schema/task/spring-task.xsd ">
+       
+    <!-- 向 Spring 容器注册AutowiredAnnotationBeanPostProcessor、CommonAnnotationBeanPostProcessor、
+    PersistenceAnnotationBeanPostProcessor 以及 RequiredAnnotationBeanPostProcessor 这 4 个BeanPostProcessor。
+            注册这4个 BeanPostProcessor的作用，就是为了你的系统能够识别相应的注解 -->
+	<context:annotation-config/>
+	<!-- 自动扫描注解 -->
+	<context:component-scan base-package="com.lzr">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	<!-- 引用properties文件,配置扫描数据 -->
+	<bean id="propertyConfigurer" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:database.properties</value>
+				<value>classpath:game-config.properties</value>
+			</list>
+		</property>
+	</bean>
+	<!-- task任务扫描注解 -->
+	<task:annotation-driven/>
+	<!-- 任务执行器配置 -->
+	<task:executor id="executor" pool-size="${task-executor-pool-size}"/>
+	<!-- 任务调度器的配置 -->
+	<task:scheduler id="scheduler" pool-size="${task-scheduler-pool-size}"/>
+    
+    <!-- mysql-mybatis配置 -->
+    <!-- 导入数据库的配置文件 -->
+    <import resource="db-config.xml"/>
+    
+    <!-- redis配置 -->
+    <!-- 导入redis的配置文件 -->
+    <import resource="redis-config.xml"/>
+    
+</beans>
